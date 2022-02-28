@@ -121,7 +121,7 @@ python -m install GDAL-2.2.4-cp37-cp37m-win_amd64.whl
 ```
 
 ### The real start
-Now you need to modify the setting_local.py file, change the Password to what you set before
+Now you need to modify the setting_local.py file in the directory ...\nacsos\BasicBrowser\BasicBrowser, change the Password to what you set before
 
 Check and trial 
 
