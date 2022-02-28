@@ -24,9 +24,9 @@ DATABASES = {
         #'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'ENGINE': 'psqlextra.backend',
         #'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'scoping_tmvv',
+        'NAME': 'scoping_tmv',
         'USER': 'postgres',
-        'PASSWORD': 'Zjy980329',
+        'PASSWORD': 'YOUR_PASSWORD',
         'HOST': 'localhost',
         'PORT': '',
     }
