@@ -145,3 +145,9 @@ Now you should be done, and ready to run a local server
 ```
 python manage.py runserver
 ```
+
+If everything set correctly, you would see:
+```
+System check identified no issues (0 silenced). 
+```
+
