@@ -27,7 +27,7 @@ Max Callaghan, Finn Müller-Hansen, Jérôme Hilaire, & Yuan Ting Lee. (2020). N
 
 ## A general guide to installation
 
-The following instructions assume installation on Ubuntu (18). Consult the internet for setting up PostgreSQL and Python/pip in other environments.
+The following instructions assume installation on Windows with Python 3.7
 
 ### Setting up PostgreSQL
 
@@ -75,6 +75,7 @@ exit
 
 ### Setting up Celery (Not necessary could skip at first)
 We use celery to execute computation-heavy tasks in the background.
+
 To do this we need to install the *message broker* RabbitMQ, install ERLANG before installing RabbitMQ on Winodws, instruction could be found on the offical page of RabbitMQ 
 
 After installation open RabbitMQ run 
@@ -86,7 +87,9 @@ celery -A celery worker --loglevel=INFO --pidfile='’
 ### Setting up scoping-tmv
 
 Operating in a virtual environment is **highly** recommended
+
 Recommended Python version is 3.7
+
 Check this video if you are interested in operating multiple Python versions on Windows: https://www.youtube.com/watch?v=HTx18uyyHw8&list=LL&index=4&t=613s
 
 Set directory to the BasicBrowser folder
