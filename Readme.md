@@ -95,8 +95,8 @@ cd X:\...\nacsos\BasicBrowser
 
 pip install virtualenv
 
-python -m virtualenv venv
-.\venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 
 ```
 
