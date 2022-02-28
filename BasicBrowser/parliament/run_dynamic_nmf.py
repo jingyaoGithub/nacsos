@@ -1,4 +1,4 @@
-import sys, resource, os, shutil, re, string, gc, subprocess
+import sys, os, shutil, re, string, gc, subprocess
 import django
 from django.core.exceptions import MultipleObjectsReturned
 import nltk

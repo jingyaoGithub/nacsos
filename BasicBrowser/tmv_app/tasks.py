@@ -17,7 +17,7 @@ from utils.utils import *
 from scoping.models import *
 import parliament.models as pm
 from time import time
-import gc, sys, resource
+import gc, sys
 from django.core import management
 from utils.utils import flatten
 import utils.db as db

@@ -14,8 +14,10 @@ import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '@-*jt+re$+w6i1nd53x&p5e&#@rv##*yv_fkebk_1%0z!=#3q4'
+os.environ["PATH"] += os.pathsep +  'G:\\Research\\Code\\Data_Science\\nacsos-master\\.venv\\Lib\\site-packages\\osgeo'
 
-
+from distutils.sysconfig import get_python_lib
+os.environ["PATH"] += os.pathsep + get_python_lib() + '\\osgeo'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
