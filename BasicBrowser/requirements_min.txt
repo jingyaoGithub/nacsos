@@ -18,3 +18,4 @@ nltk==3.2.4
 RISparser==0.4.3
 scikit-learn==0.23.1
 short-url==1.2.2
+pandas==0.23.4
