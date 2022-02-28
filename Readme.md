@@ -1,4 +1,4 @@
-# NACSOS: NLP Assisted Classification, Synthesis and Online Screening
+# NACSOS: NLP Assisted Classification, Synthesis and Online Screening Setup on Windows
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4121525.svg)](https://doi.org/10.5281/zenodo.4121525)
 
@@ -31,22 +31,21 @@ The following instructions assume installation on Ubuntu (18). Consult the inter
 
 ### Setting up PostgreSQL
 
-If you do not have PostgreSQL installed already, install it. At time of writing, the latest release was PostgreSQL 10. This version is assumed. We also need postgis to handle geographical data
+If you do not have PostgreSQL installed already, install it. At time of writing, the latest release was PostgreSQL 14. This version is assumed. We also need postgis to handle geographical data
 
-```
-sudo apt update
-sudo apt install postgresql postgresql-contrib postgis
-```
+Download and install from https://www.postgresql.org/download/
 
-Log on as the postgres user and start PostgreSQL
+Start a Command Prompt and type
 ```
-sudo -u postgres  -i
-psql
+psql -U postgres
 ```
+***IF ERROR PSQL Failure 5432:**
+Control panel - Administrative tools - Services - postgresql X64 (right click and start)*
+
 
 Create a new user for this app (call it whatever you like), use a secure password, in single quotes:
 ```
-CREATE USER scoper WITH PASSWORD 'secure_password';
+CREATE USER scoper WITH PASSWORD 'YOUR_PASSWORD';
 ```
 
 Create a database for the app, use whatever name you like:
@@ -57,7 +56,7 @@ CREATE DATABASE scoping_tmv OWNER scoper;
 Connect to the database and create a postgis extension
 
 ```
-\connect scoping_tmv_legacy;
+\connect scoping_tmv;
 CREATE EXTENSION postgis;
 ```
 
@@ -74,80 +73,65 @@ Quit PostgreSQL and log out of the postgres user role
 exit
 ```
 
-### Setting up Celery
+### Setting up Celery (Not necessary could skip at first)
 We use celery to execute computation-heavy tasks in the background.
-To do this we need to install the *message broker* RabbitMQ
+To do this we need to install the *message broker* RabbitMQ, install ERLANG before installing RabbitMQ on Winodws, instruction could be found on the offical page of RabbitMQ 
 
+After installation open RabbitMQ run 
 ```
-sudo apt-get install rabbitmq-server
-sudo systemctl enable rabbitmq-server
-sudo systemctl start rabbitmq-server
+celery -A celery worker --loglevel=INFO --pidfile='’
 ```
 
-To start celery, run
-
-```
-celery -A config worker --loglevel=info
-```
 
 ### Setting up scoping-tmv
 
 Operating in a virtual environment is **highly** recommended
+Recommended Python version is 3.7
+Check this video if you are interested in operating multiple Python versions on Windows: https://www.youtube.com/watch?v=HTx18uyyHw8&list=LL&index=4&t=613s
+
+Set directory to the BasicBrowser folder
+```
+cd X:\...\nacsos\BasicBrowser
+
+pip install virtualenv
+
+python -m virtualenv venv
+.\venv\Scripts\activate
 
 ```
-pip3 install --user virtualenvironment
 
-virtualenv -p python3 venv
 
-source venv/bin/activate
-```
-
-Quickly install some system-level dependencies that the python packages need. Depending on your system configuration, you may need to install further system packages if the pip installation runs into errors.
+Once in the environment, install dependencies, use requirements_min.txt, 5 packages might need to install separately 
 
 ```
-sudo apt-get install libfreetype6-dev libpq-dev python-cffi libffi6 libffi-dev libxml2-dev libxslt1-dev
-```
-
-Once in the environment (or out of it at your own peril), install dependencies. Use requirements/local.txt for a local environment, or requirements/production.txt for a production environment.
-
-```
-pip install -Ur requirements.txt
+pip install -r requirements_min.txt
+pip install multiprocess==0.70.8
+pip install psycopg2==2.8
+pip install markdown
+pip install lda
+pip install gensim==3.2.0
 ```
 
 This can take a while...
 
-Now you need to add the file `BasicBrowser/BasicBrowser/settings_local.py`, which will not be commited, as it contains your secret information. Copy the template below, replacing the secret information with your own.
+### GDAL installation 
+GDAL 2.2.4 is recommanded for Python 3.7 and Django 2.2.2, run the following 
+```
+python -m install GDAL-2.2.4-cp37-cp37m-win_amd64.whl
+```
+
+### The real start
+Now you need to modify the setting_local.py file, change the Password to what you set before
+
+Check and trial 
 
 ```
-import os
+python manage.py check
+```
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
-
-# Set debug true in development settings, and false in production
-DEBUG = True
-
-from fnmatch import fnmatch
-class glob_list(list):
-    def __contains__(self, key):
-        for elt in self:
-            if fnmatch(key, elt): return True
-        return False
-
-INTERNAL_IPS = glob_list([The ips to be marked as internal])
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': DATABASE_NAME,
-        'USER': DATABASE_USER,
-        'PASSWORD': PASSWORD,
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-
+Migrate
+```
+python manage.py migrate
 ```
 
 Create an admin user if using on a clean database
