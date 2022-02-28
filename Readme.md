@@ -117,7 +117,7 @@ This can take a while...
 ### GDAL installation 
 GDAL 2.2.4 is recommanded for Python 3.7 and Django 2.2.2, run the following 
 ```
-python -m install GDAL-2.2.4-cp37-cp37m-win_amd64.whl
+python -m pip install GDAL-2.2.4-cp37-cp37m-win_amd64.whl
 ```
 
 ### The real start
