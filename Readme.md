@@ -113,6 +113,7 @@ pip install psycopg2==2.8
 pip install markdown
 pip install lda
 pip install gensim==3.2.0
+pip install pandas==0.23.4
 ```
 
 This can take a while...
